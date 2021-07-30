@@ -1,14 +1,23 @@
-from re import A
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from profiles_api import serializer
+from profiles_api import serializers
 from rest_framework import viewsets
+
+from . import models
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """Handle creating and updating profiles"""
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+
+
+
 
 
 class HelloViewSet(viewsets.ViewSet):
     """Test Api ViewSet"""
-    serializer_class = serializer.HelloSerializer
+    serializer_class = serializers.HelloSerializer
 
     def list(self, request):
         """Return a hello message."""
@@ -51,7 +60,7 @@ class HelloViewSet(viewsets.ViewSet):
 
 class HelloApiView(APIView):
     """Test API View"""
-    serializer_class = serializer.HelloSerializer
+    serializer_class = serializers.HelloSerializer
 
     def get(self, request, format=None):
         """Returns a list of APIView features"""
